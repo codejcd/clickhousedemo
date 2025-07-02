@@ -4,6 +4,10 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
+bootRun {
+	args = ["--debug"]
+}
+
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
@@ -35,6 +39,10 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
 	//implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	implementation 'com.clickhouse:clickhouse-jdbc:0.4.6'
+	// MariaDB JDBC 드라이버
+	implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
+	// MyBatis + Spring Boot 연동
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
