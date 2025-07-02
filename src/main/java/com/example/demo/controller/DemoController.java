@@ -1,11 +1,15 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.AdLogSummary;
+import com.example.demo.mapper.mariadb.AdLogMariaDao;
+import com.example.demo.repository.ClickHouseAdLogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +17,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DemoController {
     private final JdbcTemplate jdbcTemplate;
+
+    private final AdLogMariaDao mariaMapper;
+    private final ClickHouseAdLogRepository clickhouseRepo;
 
     @GetMapping("/logs")
     public List<Map<String, Object>> getLogs() {
@@ -55,4 +62,15 @@ public class DemoController {
 
         return jdbcTemplate.queryForList(sql, days);
     }
+
+    @GetMapping("/mariadb")
+    public List<AdLogSummary> getMaria(@RequestParam LocalDate from, @RequestParam LocalDate to) {
+        return mariaMapper.getSummary(from, to);
+    }
+
+    @GetMapping("/clickhouse")
+    public List<AdLogSummary> getClickHouse(@RequestParam LocalDate from, @RequestParam LocalDate to) {
+        return clickhouseRepo.getSummary(from, to);
+    }
+
 }

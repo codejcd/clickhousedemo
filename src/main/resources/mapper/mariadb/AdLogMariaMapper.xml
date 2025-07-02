@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdLogMariaMapper">
+
+    <select id="getSummary" resultType="com.example.demo.dto.AdLogSummary">
+        SELECT
+        ad_id,
+        SUM(impressions) AS impressions,
+        SUM(clicks) AS clicks,
+        SUM(cost) AS cost
+        FROM ad_log
+        WHERE log_date BETWEEN #{from} AND #{to}
+        GROUP BY ad_id
+    </select>
+
+</mapper>
